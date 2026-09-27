@@ -1,0 +1,33 @@
+{
+  "hooks": {
+    "PreToolUse": [
+      {
+        "matcher": "Bash",
+        "hooks": [
+          {
+            "type": "command",
+            "command": ".claude/hooks/block-dangerous-git.sh",
+            "if": "Bash(git *)"
+          },
+          {
+            "type": "command",
+            "command": ".claude/hooks/require-tests-before-commit.sh",
+            "if": "Bash(git *)"
+          }
+        ]
+      }
+    ],
+    "PostToolUse": [
+      {
+        "matcher": "Edit|Write",
+        "hooks": [
+          {
+            "type": "command",
+            "command": ".claude/hooks/check-links.sh",
+            "if": "Edit(**/*.md)"
+          }
+        ]
+      }
+    ]
+  }
+}
