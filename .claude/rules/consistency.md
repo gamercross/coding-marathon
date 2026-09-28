@@ -26,6 +26,7 @@
 | `.claude/hooks/*.sh` | `CLAUDE.md`(훅 표), `.claude/settings.json`(등록 여부) |
 | `.claude/skills/dev-workflow/SKILL.md` | `.claude/skills/dev-workflow/PROCEDURE.md`(서로 참조), `CLAUDE.md` |
 | `.claude/skills/dev-workflow/PROCEDURE.md` | `.claude/skills/dev-workflow/SKILL.md`(서로 참조) |
+| `.claude/rules/external-integration.md` | `CLAUDE.md`(라우팅 표), `.claude/skills/dev-workflow/{SKILL,PROCEDURE}.md`(명령 4), `docs/catalog/external-tools.md`(판정 기록 대상) |
 
 **새 기준 파일을 추가하면(새 rules 파일, 새 hook, 새 agent 등) 이 표에도 행을
 하나 추가한다.** 표 자체가 낡으면 이 규칙 전체가 무력화된다.

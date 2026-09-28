@@ -24,6 +24,7 @@
 | git 명령(커밋, 브랜치, 푸시 등) | [`.claude/rules/git-workflow.md`](.claude/rules/git-workflow.md) |
 | `docs/01-problem-save/sessions/**`에 새 세션 저장, 또는 `dev-workflow` 명령 1 | [`.claude/rules/problem-save-gate.md`](.claude/rules/problem-save-gate.md) |
 | `CLAUDE.md`/`.claude/rules/**`/`.claude/hooks/**`/`.claude/agents/**`/`dev-workflow` 스킬 자체를 고침 | [`.claude/rules/consistency.md`](.claude/rules/consistency.md) |
+| 새 외부 스킬/플러그인/MCP를 설치·평가(`dev-workflow` 명령 4) | [`.claude/rules/external-integration.md`](.claude/rules/external-integration.md) |
 
 **규칙 파일은 필요할 때만 읽으세요** — 이 CLAUDE.md에는 내용을 옮겨 적지
 않습니다. 매칭되는 규칙이 없으면 그냥 진행하되, 위험한 git 명령이나 테스트

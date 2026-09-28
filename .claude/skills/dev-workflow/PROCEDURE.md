@@ -79,3 +79,26 @@
    요약만 받는다 (전체 테스트 + 링크 체크).
 7. 변경 사항을 git commit한다 — 커밋 메시지에 어떤 프로젝트/문제에서 나온
    교훈인지 명시. 커밋 전 `.claude/rules/git-workflow.md`를 따른다.
+
+## 명령 4: 외부 스킬/MCP 통합 분석
+
+새 공식 스킬·플러그인·MCP 서버를 설치하거나 평가할 때 실행한다. 자세한
+규칙은 [`.claude/rules/external-integration.md`](../../rules/external-integration.md)에
+있고, 여기는 실행 순서만 담는다.
+
+1. 이 도구가 어떤 경로를 건드리는지(자기 폴더 안쪽뿐인지, `.claude/**`나
+   `CLAUDE.md`·`docs/**`까지인지) 확인한다 — **도구마다 다르게**, 일괄
+   체크리스트로 넘기지 않는다.
+2. 우리 `.claude/rules/**`·`hooks/**`·`agents/**`와 겹치거나 충돌하는 게
+   있는지 확인한다.
+3. 이 도구가 우리 기준 파일(`CLAUDE.md`, `.claude/rules/**`,
+   `.claude/hooks/**`, `.claude/agents/**`)을 스스로 고쳤다면, 그대로 받지
+   말고 `.claude/rules/consistency.md`의 기준 파일 지도로 검토 후 커밋
+   여부를 사람이 정한다.
+4. 채택/격리/제거 중 하나로 판정하고
+   [`docs/catalog/external-tools.md`](../../../docs/catalog/external-tools.md)에
+   기록한다. 채택이면 `CLAUDE.md` 라우팅 표와 `consistency.md`의 기준 파일
+   지도에도 새 행을 추가한다.
+5. 이번 항목에서 실제로 이 도구를 썼다면, 명령 3(회고 반영)에서 통합 시점의
+   판정이 실사용 후에도 맞았는지 다시 확인하고, 다르면 `checklist.md`에
+   반영한다.
