@@ -69,7 +69,7 @@
 
 - `main` — 실제 작업 이력 전체(개인 기록 포함), private.
 - `template` — 개인 기록을 뺀 배포용 스냅샷. **main으로 머지하지 않는다** —
-  실제 배포처는 별도 저장소 `gamercross/my-dev-process-template`(public).
+  실제 배포처는 별도 저장소 `gamercross/coding-marathon`(public).
 - `team` — 팀 프로젝트(코딩마라톤 등) 협업용 워크스페이스. 이 CLAUDE.md와
   `.claude/` 구조 자체가 이 브랜치의 작업 대상입니다.
 

@@ -16,7 +16,7 @@ git 명령을 실행하기 전에 읽으세요. 위험한 명령 일부는 훅(`
 
 - `template` 브랜치는 `main`의 개인 기록을 의도적으로 지운 배포용 스냅샷이다
   — **`main`으로 머지하지 않는다.** 배포는 별도 저장소
-  (`gamercross/my-dev-process-template`)로 이미 분리돼 있다.
+  (`gamercross/coding-marathon`)로 이미 분리돼 있다.
 - `team` 브랜치는 팀 프로젝트 협업용 워크스페이스다(비공개 — 개인 인스턴스
   데이터를 넣어도 된다).
 - `main`에서 만든 변경을 `template`/공개 템플릿 저장소에도 반영할지 정할 때는
