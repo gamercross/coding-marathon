@@ -1,0 +1,248 @@
+<title>AI 요구사항 인터뷰어</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@500;700&family=IBM+Plex+Sans+KR:wght@400;500;700&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+/* Layout: single-column spec sheet — numbered sections down a spine, mockups reproduced as live HTML cards */
+:root{
+  --bg:#F6F4EE; --surface:#FFFFFF; --ink:#1B2430; --ink-soft:#5B6472; --ink-faint:#8A93A0;
+  --line:rgba(27,36,48,0.13); --accent:#1F6F63; --accent-soft:#E3EFEB; --accent-ink:#0F4A41;
+  --added:#1F6F63; --added-bg:#E3F1EC; --modified:#9A6A16; --modified-bg:#FBF0DC; --danger:#A23B33;
+  color-scheme:light;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#12161B; --surface:#1A2027; --ink:#ECEEF1; --ink-soft:#A6AFBB; --ink-faint:#727C89;
+    --line:rgba(255,255,255,0.14); --accent:#4FB3A0; --accent-soft:#1D3530; --accent-ink:#BFE9DD;
+    --added:#4FB3A0; --added-bg:#1C332D; --modified:#D9A94E; --modified-bg:#3A2F17; --danger:#D97A70;
+    color-scheme:dark;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#12161B; --surface:#1A2027; --ink:#ECEEF1; --ink-soft:#A6AFBB; --ink-faint:#727C89;
+  --line:rgba(255,255,255,0.14); --accent:#4FB3A0; --accent-soft:#1D3530; --accent-ink:#BFE9DD;
+  --added:#4FB3A0; --added-bg:#1C332D; --modified:#D9A94E; --modified-bg:#3A2F17; --danger:#D97A70;
+  color-scheme:dark;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:'IBM Plex Sans KR',sans-serif;line-height:1.7;padding:0 16px;}
+.wrap{max-width:760px;margin:0 auto;padding-block:2.5rem 4rem;}
+h1,h2,h3{font-family:'Noto Serif KR',serif;font-weight:700;text-wrap:balance;margin:0;}
+h1{font-size:clamp(28px,6vw,38px);letter-spacing:-0.01em;}
+h2{font-size:22px;color:var(--ink);}
+p{margin:0;color:var(--ink-soft);}
+.mono{font-family:'IBM Plex Mono',ui-monospace,monospace;}
+.eyebrow{font-family:'IBM Plex Mono',monospace;font-size:12px;letter-spacing:0.08em;color:var(--accent-ink);background:var(--accent-soft);display:inline-block;padding:3px 10px;border-radius:99px;}
+.masthead{display:flex;flex-direction:column;gap:12px;padding-bottom:2rem;border-bottom:1px solid var(--line);margin-bottom:2.5rem;}
+.meta-row{display:flex;gap:16px;flex-wrap:wrap;font-size:13px;color:var(--ink-faint);margin-top:4px;}
+section{margin-top:3rem;}
+.sec-head{display:flex;align-items:baseline;gap:10px;margin-bottom:1rem;}
+.sec-num{font-family:'IBM Plex Mono',monospace;font-size:13px;color:var(--ink-faint);}
+.lede{font-size:17px;margin-top:0.75rem;}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:1.25rem 1.5rem;}
+.grid-2{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:14px;}
+.grid-3{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px;}
+.flow{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-top:1rem;}
+.flow .node{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:10px 14px;font-size:13px;min-width:0;flex:1 1 140px;text-align:center;}
+.flow .arrow{color:var(--ink-faint);font-size:16px;flex:0 0 auto;}
+table{width:100%;border-collapse:collapse;font-size:13px;}
+th,td{text-align:left;padding:8px 10px;border-bottom:1px solid var(--line);vertical-align:top;}
+th{color:var(--ink-faint);font-weight:500;font-size:12px;letter-spacing:0.02em;}
+.pull{border-left:3px solid var(--accent);padding:0.25rem 0 0.25rem 1.25rem;font-family:'Noto Serif KR',serif;font-size:18px;color:var(--ink);border-radius:0;}
+.chip{display:inline-flex;align-items:center;font-size:12px;font-family:'IBM Plex Mono',monospace;color:var(--ink-soft);background:var(--bg);border:1px solid var(--line);border-radius:99px;padding:2px 10px;}
+.bubble{max-width:82%;border-radius:10px;padding:7px 11px;font-size:13px;}
+.bubble.ai{background:var(--bg);border-bottom-left-radius:2px;align-self:flex-start;}
+.bubble.me{background:var(--accent-soft);color:var(--accent-ink);border-bottom-right-radius:2px;align-self:flex-end;}
+.mock{border:1px solid var(--line);border-radius:12px;overflow:hidden;background:var(--surface);}
+.mock-head{padding:8px 14px;border-bottom:1px solid var(--line);font-size:12px;color:var(--ink-faint);}
+.mock-body{padding:12px 14px;display:flex;flex-direction:column;gap:8px;}
+.diff-add{border:1px solid var(--added);border-radius:8px;padding:10px 12px;background:var(--surface);}
+.diff-add .tag{color:var(--added);font-size:12px;font-family:'IBM Plex Mono',monospace;}
+.diff-add .line{background:var(--added-bg);color:var(--accent-ink);border-radius:6px;padding:6px 9px;font-size:12.5px;margin-top:6px;}
+.diff-mod{border:1px solid var(--modified);border-radius:8px;padding:10px 12px;background:var(--surface);}
+.diff-mod .tag{color:var(--modified);font-size:12px;font-family:'IBM Plex Mono',monospace;}
+.diff-mod .old{text-decoration:line-through;color:var(--ink-faint);font-size:12.5px;margin-top:6px;}
+.diff-mod .line{background:var(--modified-bg);color:var(--modified);border-radius:6px;padding:6px 9px;font-size:12.5px;margin-top:4px;}
+.btnrow{display:flex;gap:8px;margin-top:8px;}
+.btn{flex:1;text-align:center;font-size:12px;border:1px solid var(--line);border-radius:8px;padding:6px;color:var(--ink-soft);}
+.progress{height:5px;background:var(--bg);border-radius:5px;overflow:hidden;margin:8px 0 4px;}
+.progress > div{height:100%;background:var(--accent);}
+ul.plain{margin:0;padding:0;list-style:none;display:flex;flex-direction:column;gap:8px;}
+ul.plain li{display:flex;gap:10px;font-size:14px;color:var(--ink-soft);}
+ul.plain li::before{content:"—";color:var(--ink-faint);flex:0 0 auto;}
+.timeline{display:flex;flex-direction:column;border-left:1px solid var(--line);padding-left:1rem;gap:1.1rem;margin-top:1rem;}
+.timeline .t{font-family:'IBM Plex Mono',monospace;font-size:12px;color:var(--accent-ink);}
+.footer{margin-top:3.5rem;padding-top:1.5rem;border-top:1px solid var(--line);font-size:12px;color:var(--ink-faint);}
+@media (max-width:520px){.grid-2{grid-template-columns:1fr}.grid-3{grid-template-columns:1fr}}
+</style>
+
+<div class="wrap">
+
+  <div class="masthead">
+    <span class="eyebrow">코딩마라톤 기획서</span>
+    <h1>AI 요구사항 인터뷰어</h1>
+    <p class="lede">막연한 아이디어를 컨텍스트-프리 질문으로 되물어 구조화된 요구사항으로 바꿔주는 대화형 인터뷰 서비스.</p>
+    <div class="meta-row">
+      <span>2026 대전 코디세이 AI 네이티브 코딩마라톤</span>
+      <span>팀 3인</span>
+      <span>제작 기간 6시간</span>
+    </div>
+  </div>
+
+  <section>
+    <div class="sec-head"><span class="sec-num">01</span><h2>개요</h2></div>
+    <p class="lede">아이디어는 있지만 "무엇을, 왜, 어떻게" 정리해서 말하지 못하는 사람(특히 코딩 초보자)이 대상입니다. AI가 정형화된 질문을 한 번에 1~2개씩 던지고, 답변에 따라 다음 질문을 좁혀가며 막연한 요청을 구체적인 요구사항으로 다듬습니다.</p>
+    <div class="card" style="margin-top:1rem;">
+      <table>
+        <tr><th style="width:110px">원문제</th><td>새 프로젝트를 시작할 때마다 즉흥적으로 접근하고, 요구사항이 애매한 채로 개발이 시작돼 나중에 다시 만든다.</td></tr>
+        <tr><th>목표</th><td>대화 4범주(동기·범위·성공기준·메타)로 되물어, 개발 착수가 가능한 수준의 요구사항 목록을 자동 생성한다.</td></tr>
+        <tr><th>근거</th><td>Gause &amp; Weinberg, <span class="mono">Exploring Requirements</span> (1989) — 컨텍스트-프리 질문 / IEEE 830 정량화 규칙</td></tr>
+      </table>
+    </div>
+  </section>
+
+  <section>
+    <div class="sec-head"><span class="sec-num">02</span><h2>핵심 메커니즘</h2></div>
+    <p>시스템 프롬프트가 자유 대화를 좁은 절차로 강제합니다 — 받아 적기가 아니라 되묻기.</p>
+    <div class="card mono" style="margin-top:1rem;font-size:13px;line-height:1.85;color:var(--ink-soft);white-space:pre-wrap;">"당신은 요구사항 인터뷰어입니다. 사용자가 막연한 아이디어를 말하면
+받아 적지 말고 아래 4범주로 되물어서 구체화하세요:
+1. 동기/배경 — 왜 이걸 만들려는지, 기존 대안으로는 왜 부족한지
+2. 범위/환경 — 누가 쓸지, 더 큰 시스템의 일부인지
+3. 성공 기준 — '빠르다/편하다' 같은 표현이 나오면 숫자로 되묻기
+4. 메타 — 마지막에 '안 물어봤지만 알아야 할 게 있나요?'
+한 번에 1~2개씩만 묻고, 끝나면 EARS 문형으로 정리하세요."</div>
+  </section>
+
+  <section>
+    <div class="sec-head"><span class="sec-num">03</span><h2>아키텍처</h2></div>
+    <p>채팅 UI가 Claude API를 직접 호출하는 얇은 구조. 대화 기록만 유지하면 되고 별도 DB는 필요 없습니다.</p>
+    <div class="flow">
+      <div class="node">채팅 UI</div>
+      <div class="arrow">→</div>
+      <div class="node">Claude API<br><span class="chip">시스템 프롬프트</span></div>
+      <div class="arrow">→</div>
+      <div class="node">EARS 요구사항 목록</div>
+    </div>
+    <div class="card" style="margin-top:1rem;">
+      <p style="color:var(--ink);"><strong style="font-weight:500;">API 키가 필요합니다.</strong> Claude Code나 claude.ai 세션은 로그인한 사람만 쓸 수 있어, 다른 사람이 브라우저로 접속해 쓰는 서비스가 되려면 앱이 자체적으로 Anthropic API 키를 갖고 호출해야 합니다. 개발 중 코딩 보조로 Claude Code를 쓰는 것과는 별개입니다.</p>
+    </div>
+  </section>
+
+  <section>
+    <div class="sec-head"><span class="sec-num">04</span><h2>UI/UX 목업</h2></div>
+    <p>대화는 입력 수단, 왼쪽(또는 위쪽) 문서가 진짜 산출물이라는 걸 화면에서 바로 보이게 합니다.</p>
+
+    <div style="margin-top:1.25rem;">
+      <p style="font-size:13px;color:var(--ink-faint);margin-bottom:8px;">4-1. 인터뷰 화면 + 실시간 요구사항 요약</p>
+      <div class="mock">
+        <div class="mock-head">AI 요구사항 인터뷰어</div>
+        <div class="mock-body">
+          <div style="display:flex;flex-direction:column;gap:8px;">
+            <div class="bubble ai">어떤 걸 만들고 싶으세요?</div>
+            <div class="bubble me">할 일 관리 앱 만들고 싶어요</div>
+            <div class="bubble ai">이미 쓰는 앱(노션, 캘린더)으로는 왜 부족한가요?</div>
+            <div class="bubble me">할 일이 많으면 뭐부터 할지 못 정해서요</div>
+            <div class="bubble ai">'우선순위를 정했다'는 걸 숫자로 어떻게 확인하나요?</div>
+          </div>
+        </div>
+      </div>
+      <div class="card" style="margin-top:10px;">
+        <div style="display:flex;justify-content:space-between;font-size:13px;"><span>요구사항 요약</span><span class="chip">4개 확정</span></div>
+        <table style="margin-top:8px;">
+          <tr><td class="mono" style="font-size:12px;">사용자가 할 일을 3개 이상 등록하면, 시스템은 마감일·중요도로 정렬한 순위를 보여줘야 한다</td></tr>
+          <tr><td class="mono" style="font-size:12px;">사용자가 우선순위를 확인하면, 3초 이내에 정렬된 목록이 표시돼야 한다</td></tr>
+        </table>
+      </div>
+    </div>
+
+    <div style="margin-top:1.75rem;">
+      <p style="font-size:13px;color:var(--ink-faint);margin-bottom:8px;">4-2. 분할 화면 — 문서(좌) · 인터뷰(우)</p>
+      <div class="grid-2">
+        <div class="card">
+          <div style="display:flex;justify-content:space-between;font-size:13px;"><span>요구사항 명세</span><span style="color:var(--ink-faint);font-size:12px;">완성도 60%</span></div>
+          <div class="progress"><div style="width:60%;"></div></div>
+          <ul class="plain" style="margin-top:8px;">
+            <li>동기/배경 — 확정</li>
+            <li>성공 기준 — 확정</li>
+            <li style="color:var(--ink-faint);">범위/환경 — 대화 중</li>
+          </ul>
+        </div>
+        <div class="mock">
+          <div class="mock-head">질문 3/4 · 범위</div>
+          <div class="mock-body">
+            <div class="bubble ai">이 앱을 본인만 쓰나요, 다른 사람도 같이 쓰나요?</div>
+            <div class="bubble me">일단 저만요</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div style="margin-top:1.75rem;">
+      <p style="font-size:13px;color:var(--ink-faint);margin-bottom:8px;">4-3. diff 기반 승인 — AI가 조용히 덮어쓰지 않음</p>
+      <div class="grid-2">
+        <div class="diff-add">
+          <div class="tag">+ 새 항목 제안</div>
+          <div class="line">완료된 할 일을 5개 이상 쌓으면, 주간 완료율을 요약해 보여줘야 한다</div>
+          <div class="btnrow"><div class="btn">승인</div><div class="btn" style="color:var(--danger);">거절</div></div>
+        </div>
+        <div class="diff-mod">
+          <div class="tag">~ 수정 제안</div>
+          <div class="old">본인만 씁니다</div>
+          <div class="line">본인 혼자 쓰지만, 나중에 가족과 공유할 수도 있음</div>
+          <div class="btnrow"><div class="btn">승인</div><div class="btn" style="color:var(--danger);">거절</div></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="sec-head"><span class="sec-num">05</span><h2>매니패스트와의 차이</h2></div>
+    <table>
+      <tr><th>항목</th><th>매니패스트</th><th>우리</th></tr>
+      <tr><td>질문 방식</td><td>객관식 + 직접 입력</td><td>완전 자유 서술형, 답변마다 다음 질문이 달라짐</td></tr>
+      <tr><td>모호한 답변</td><td>객관식이라 애초에 적음</td><td>"빠르다" 등은 그 자리에서 숫자로 재질문</td></tr>
+      <tr><td>입력 자료</td><td>PDF·XLSX 첨부 인입</td><td>순수 대화 (인입은 스코프 밖, 정직하게 인정)</td></tr>
+      <tr><td>산출물</td><td>내러티브 PRD 문서</td><td>EARS 구조화 목록 — 다음 단계로 바로 이관 가능</td></tr>
+      <tr><td>깊이 조절</td><td>항상 풀 PRD</td><td>요청 크기에 따라 인터뷰 깊이 자체가 달라짐</td></tr>
+    </table>
+  </section>
+
+  <section>
+    <div class="sec-head"><span class="sec-num">06</span><h2>이건 그냥 챗봇 아닌가</h2></div>
+    <p class="pull">밑바닥 기술은 챗봇이 맞지만, 자유 대화가 아니라 강제된 절차이고 대화 자체가 아니라 구조화된 산출물이 목적이라는 점이 다릅니다.</p>
+  </section>
+
+  <section>
+    <div class="sec-head"><span class="sec-num">07</span><h2>로드맵</h2></div>
+    <div class="grid-3">
+      <div class="card"><span class="chip">MVP · 이번 해커톤</span><p style="margin-top:8px;color:var(--ink);">대화 인터뷰 → 종료 시 EARS 요구사항 일괄 생성</p></div>
+      <div class="card"><span class="chip">V1.5</span><p style="margin-top:8px;color:var(--ink);">답변마다 실시간 문서 갱신, diff 승인 UI</p></div>
+      <div class="card"><span class="chip">V2</span><p style="margin-top:8px;color:var(--ink);">PDF·XLSX 첨부 인입, 요구사항 간 교차 검증</p></div>
+    </div>
+  </section>
+
+  <section>
+    <div class="sec-head"><span class="sec-num">08</span><h2>팀과 타임라인</h2></div>
+    <div class="grid-3">
+      <div class="card"><span class="chip">총괄</span><p style="margin-top:8px;">질문 시나리오 테스트, 발표 스토리라인</p></div>
+      <div class="card"><span class="chip">AI 활용 가능</span><p style="margin-top:8px;">시스템 프롬프트 설계, Claude API 연동</p></div>
+      <div class="card"><span class="chip">배우는 사람</span><p style="margin-top:8px;">채팅 UI 뼈대, AI 코딩 도구로 실습하며 제작</p></div>
+    </div>
+    <div class="timeline">
+      <div><span class="t">01:00</span> — 주제 확정, 역할 분담</div>
+      <div><span class="t">02:00</span> — 시스템 프롬프트 초안, UI 뼈대 착수</div>
+      <div><span class="t">04:00</span> — API 연동, 인터뷰 흐름 통합</div>
+      <div><span class="t">06:00</span> — 시나리오 테스트, 발표 리허설</div>
+      <div><span class="t">07:00</span> — 발표</div>
+    </div>
+  </section>
+
+  <section>
+    <div class="sec-head"><span class="sec-num">09</span><h2>아직 안 정한 것</h2></div>
+    <ul class="plain">
+      <li>API 키 발급 주체와 예산 한도</li>
+      <li>실제 발표 데모 시나리오(투입할 예시 아이디어)</li>
+      <li>diff 승인 UI를 MVP에 넣을지, V1.5로 미룰지</li>
+    </ul>
+  </section>
+
+  <div class="footer">2026 대전 코디세이 AI 네이티브 코딩마라톤 · 팀 기획서</div>
+</div>
